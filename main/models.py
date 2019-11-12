@@ -11,3 +11,6 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('main:book-edit', kwargs={'id': self.id})
+
+    def get_api_url(self):
+        return reverse('api:book-edit', kwargs={'id': self.id})

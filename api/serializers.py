@@ -34,6 +34,29 @@ class UserListCreateSerializer(ModelSerializer):
 
 class BookListCreateSerializer(ModelSerializer):
     owner = CharField(read_only=True)
+    edit_url = SerializerMethodField()
+
+    class Meta:
+        model = Book
+        fields = [
+            'owner',
+            'title',
+            'content',
+            'author',
+            'edit_url',
+        ]
+        extra_kwargs = {
+            "owner": {
+                "read_only": True
+            }
+        }
+
+    def get_edit_url(self, obj):
+        return obj.get_api_url()
+
+
+class BookDetailSerializer(ModelSerializer):
+    owner = CharField(read_only=True)
 
     class Meta:
         model = Book
