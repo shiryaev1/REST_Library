@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 class Book(models.Model):
@@ -7,3 +8,6 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     author = models.CharField(max_length=50)
+
+    def get_absolute_url(self):
+        return reverse('main:book-edit', kwargs={'id': self.id})
