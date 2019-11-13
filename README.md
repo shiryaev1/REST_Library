@@ -15,7 +15,7 @@
 
 * (venv) $ pip install -r requirements.txt
 * (venv) $ python manage.py migrate
-* (venv) $ python manage.py loaddata fixtures/initial_data.json
+* (venv) $ python manage.py loaddata fixture/initial_data.json
 * (venv) $ python manage.py runserver 0.0.0.0:8000
 
 ## REST API
