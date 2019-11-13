@@ -39,6 +39,7 @@ class BookListCreateSerializer(ModelSerializer):
     class Meta:
         model = Book
         fields = [
+            'id',
             'owner',
             'title',
             'content',
@@ -52,7 +53,7 @@ class BookListCreateSerializer(ModelSerializer):
         }
 
     def get_edit_url(self, obj):
-        return obj.get_api_url()
+        return f'/api/book/{obj.id}/edit/'
 
 
 class BookDetailSerializer(ModelSerializer):
@@ -61,6 +62,7 @@ class BookDetailSerializer(ModelSerializer):
     class Meta:
         model = Book
         fields = [
+            'id',
             'owner',
             'title',
             'content',
