@@ -55,7 +55,7 @@ class UserBookLibAPIView(ListCreateAPIView):
         serializer = BookListCreateSerializer(books, many=True)
         headers = self.get_success_headers(serializer.data)
         return Response(
-            serializer.data,
+            serializer._data,
             status=status.HTTP_201_CREATED,
             headers=headers
         )
