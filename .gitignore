@@ -47,6 +47,7 @@ coverage.xml
 .pytest_cache/
 .idea/
 library
+REST_Library
 
 # Translations
 *.mo
