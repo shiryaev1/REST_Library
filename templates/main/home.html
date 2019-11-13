@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <ul class="list-group" style="width: 50rem;">
-    <li class="list-group-item disabled">Users</li>
+    <li class="list-group-item disabled">Users</li><br>
     {% for user in users %}
         <li class="list-group-item"><a href="/lib/{{ user.id }}">
         {% if user.get_full_name %}
