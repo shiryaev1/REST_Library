@@ -12,7 +12,6 @@ psycopg2-binary==2.8.4
 py==1.8.0
 pyparsing==2.4.5
 pytest==5.2.2
-pytest-django==3.7.0
 pytz==2019.3
 six==1.13.0
 sqlparse==0.3.0
