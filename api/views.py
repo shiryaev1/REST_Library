@@ -4,7 +4,11 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from api.serializers import UserListCreateSerializer, BookListCreateSerializer, BookDetailSerializer
+from api.serializers import (
+    UserListCreateSerializer,
+    BookListCreateSerializer,
+    BookDetailSerializer
+)
 from main.models import Book
 
 
@@ -20,7 +24,11 @@ class UserListAPIView(ListCreateAPIView):
         users = User.objects.all()
         serializer = UserListCreateSerializer(users, many=True)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
 
 
 class UserBookLibAPIView(ListCreateAPIView):
@@ -46,7 +54,11 @@ class UserBookLibAPIView(ListCreateAPIView):
         books = Book.objects.filter(owner_id=kwargs.get('id'))
         serializer = BookListCreateSerializer(books, many=True)
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
 
     def perform_create(self, serializer, pk=None):
         serializer.save(owner_id=pk)

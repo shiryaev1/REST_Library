@@ -88,7 +88,9 @@ class BookEditView(TemplateView):
         form = BookCreateForm(request.POST, instance=book)
         if form.is_valid():
             form.save(book.owner)
-            return redirect(reverse('main:user-lib', kwargs={'id': book.owner_id}))
+            return redirect(reverse('main:user-lib', kwargs={
+                'id': book.owner_id
+            }))
         args = {
             'book_form': form
         }
