@@ -1,26 +1,26 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.generic import TemplateView
+from django.views.generic import View
 
 from main.forms import UserForm, BookCreateForm
 from main.models import Book
 
 
-class UserListView(TemplateView):
+class UserListView(View):
 
     template_name = 'main/home.html'
     model = User
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         args = {
             'users': self.model.objects.all().order_by('-id'),
             'user_form': UserForm(),
         }
         return render(request, self.template_name, args)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
@@ -32,15 +32,15 @@ class UserListView(TemplateView):
         return render(request, self.template_name, args)
 
 
-class UserBookLibView(TemplateView):
+class UserBookLibView(View):
 
     template_name = 'main/library.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, id):
         try:
-            user = User.objects.get(id=kwargs['id'])
-        except:
-            return Http404
+            user = User.objects.get(id=id)
+        except ObjectDoesNotExist:
+            raise Http404
         args = {
             'user': user,
             'books': Book.objects.filter(owner=user),
@@ -48,10 +48,10 @@ class UserBookLibView(TemplateView):
         }
         return render(request, self.template_name, args)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, id):
         try:
-            user = User.objects.get(id=kwargs['id'])
-        except:
+            user = User.objects.get(id=id)
+        except ObjectDoesNotExist:
             return Http404
         form = BookCreateForm(request.POST)
         if form.is_valid():
@@ -65,32 +65,30 @@ class UserBookLibView(TemplateView):
         return render(request, self.template_name, args)
 
 
-class BookEditView(TemplateView):
+class BookEditView(View):
 
     template_name = 'main/book_edit.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, id):
         try:
-            book = Book.objects.get(id=kwargs['id'])
-        except:
-            return Http404
+            book = Book.objects.get(id=id)
+        except ObjectDoesNotExist:
+            raise Http404
         form = BookCreateForm(instance=book)
         args = {
             'book_form': form,
         }
         return render(request, self.template_name, args)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, id):
         try:
-            book = Book.objects.get(id=kwargs['id'])
-        except:
+            book = Book.objects.get(id=id)
+        except ObjectDoesNotExist:
             return Http404
         form = BookCreateForm(request.POST, instance=book)
         if form.is_valid():
             form.save(book.owner)
-            return redirect(reverse('main:user-lib', kwargs={
-                'id': book.owner_id
-            }))
+            return redirect('main:user-lib', id=book.owner_id)
         args = {
             'book_form': form
         }

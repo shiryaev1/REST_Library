@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from main.models import Book
 
 
-class AnimalTestCase(TestCase):
+class MainTestCase(TestCase):
     def test_setUp(self):
         user1 = User.objects.create(
             username='user1',

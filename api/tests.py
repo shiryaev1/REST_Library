@@ -34,6 +34,11 @@ def update_book(client, user_id, book_id):
     return response.data['id'], response.status_code
 
 
+def get_book_detail(client, book_id):
+    response = client.get(f'/api/book/{book_id}/edit/')
+    return response.data['id'], response.status_code
+
+
 @pytest.mark.django_db
 def test_create_user(client):
     user_id, status_code = create_user(client)
@@ -60,5 +65,18 @@ def test_update_book(client):
     assert book_id is not None
     assert status_code == 201
     book_id, status_code = update_book(client, user_id, book_id)
+    assert book_id is not None
+    assert status_code == 200
+
+
+@pytest.mark.django_db
+def test_get_book_detail(client):
+    user_id, status_code = create_user(client)
+    assert user_id is not None
+    assert status_code == 201
+    book_id, status_code = create_book(client, user_id)
+    assert book_id is not None
+    assert status_code == 201
+    book_id, status_code = get_book_detail(client, book_id)
     assert book_id is not None
     assert status_code == 200
