@@ -25,7 +25,7 @@ SECRET_KEY = '$qji)l)h=751*s2d3e&pe6#_*ty(o%ny8mz_c(qjo5gm31a9=-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': 'lib_db',
         'USER': 'proj_user',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
